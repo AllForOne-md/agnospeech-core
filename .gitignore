@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+.venv/
+venv/
+
+# fetched datasets (regenerate with scripts/fetch_corpora.py / fetch_hatexplain.py)
+data/hatecheck.csv
+data/toxigen.csv
+data/civilcomments.csv
+data/hatexplain.csv
+data/hatexplain_rationales.jsonl
+data/synth_joint.csv
+data/_c50/
+data/_synth/
+
+# computed results (regenerate with scripts/compute_results.py); the shipped
+# best-config files live under privatized/ instead
+results/
+
+.DS_Store

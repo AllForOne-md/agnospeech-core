@@ -1,0 +1,48 @@
+[project]
+name = "agnospeech"
+version = "0.1.0"
+description = "AgnoSpeech: a lexicon-free, tiered text-to-text privatization mechanism for privacy-preserving hate-speech detection."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "AgnoSpeech" },
+]
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "scikit-learn>=1.3",
+  "pandas>=2.0",
+  "nltk>=3.9,<3.10",       # WordNet + stopwords for the L3 rewrite (needed by both engines)
+]
+
+[project.optional-dependencies]
+# The zero-shot transformer engine (`scripts/compute_results.py --engine zeroshot`):
+# the cardiff HSD head + occlusion-based L2, the Presidio/GLiNER L1 NER path, and
+# `datasets` to fetch the disjoint corpora. GPU-aware (heads move to CUDA when
+# present). Each drop-in is optional-import guarded; the all-sklearn `fast` engine
+# needs none of this. After installing, also run: python -m spacy download en_core_web_sm
+results = [
+  "transformers>=4.40",
+  "torch>=2.2",
+  "presidio-analyzer>=2.2",
+  "spacy>=3.7",
+  "gliner>=0.2",
+  "model2vec>=0.3",
+  "datasets>=2.18",
+]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+agnospeech = "agnospeech.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agnospeech"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
