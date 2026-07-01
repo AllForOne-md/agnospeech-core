@@ -59,6 +59,21 @@ readability-preserving fallback, not the privacy optimum. Across all six corpora
 only **0–7%** of hate un-privatized at L2, so the mechanism generalizes across datasets rather than
 fitting a single one.
 
+### Expanded corpus: reddit_50 (50 authors, n=539)
+
+The same run on the larger 50-author corpus. L2 stays the best configuration and the effect is
+stronger (more candidate authors, chance 0.02): `fast @ L2` cuts the attacker from 0.379 to 0.148
+(TO 0.571); `zeroshot @ L2` to 0.187 (TO 0.504), both at essentially no utility loss.
+
+| Configuration | Engine | Utility | Attack | TO |
+| --- | --- | --- | --- | --- |
+| L1 redact | fast | 1.00 | 0.379 | 0.000 |
+| **L2 distill** | fast | 0.963 | **0.148** | **0.571** |
+| L3 rewrite | fast | 1.00 | 0.269 | 0.289 |
+| L1 redact | zeroshot | 0.797 | 0.317 | -0.041 |
+| **L2 distill** | zeroshot | 0.999 | **0.187** | **0.504** |
+| L3 rewrite | zeroshot | 1.00 | 0.282 | 0.255 |
+
 ## Install
 
 ```bash
@@ -103,6 +118,8 @@ Twitter sample (generated on a Colab T4 GPU). Regenerate any size with `scripts/
 | --- | --- | --- | --- | --- |
 | `reddit_25_L2_fast.csv` | Reddit board corpus (full test split) | fast | 346 | yes (25 pseudonymous authors) |
 | `reddit_25_L2_zeroshot.csv` | Reddit board corpus (full test split) | zeroshot | 346 | yes |
+| `reddit_50_L2_fast.csv` | Reddit, 50 authors (full test split) | fast | 539 | yes (50 pseudonymous authors) |
+| `reddit_50_L2_zeroshot.csv` | Reddit, 50 authors (full test split) | zeroshot | 539 | yes |
 | `hatexplain_twitter_L2_fast.csv` | HateXplain, Twitter only | fast | 500 | no (utility only) |
 | `hatexplain_twitter_L2_zeroshot.csv` | HateXplain, Twitter only | zeroshot | 500 | no (utility only) |
 
