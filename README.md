@@ -118,6 +118,8 @@ Twitter sample (generated on a Colab T4 GPU). Regenerate any size with `scripts/
 | --- | --- | --- | --- | --- |
 | `reddit_25_L2_fast.csv` | Reddit board corpus (full test split) | fast | 346 | yes (25 pseudonymous authors) |
 | `reddit_25_L2_zeroshot.csv` | Reddit board corpus (full test split) | zeroshot | 346 | yes |
+| `reddit_50_L1_fast.csv` | Reddit, 50 authors (L1 redact) | fast | 539 | yes |
+| `reddit_50_L1_zeroshot.csv` | Reddit, 50 authors (L1 redact) | zeroshot | 539 | yes |
 | `reddit_50_L2_fast.csv` | Reddit, 50 authors (full test split) | fast | 539 | yes (50 pseudonymous authors) |
 | `reddit_50_L2_zeroshot.csv` | Reddit, 50 authors (full test split) | zeroshot | 539 | yes |
 | `reddit_50_L3_fast.csv` | Reddit, 50 authors (L3 rewrite) | fast | 539 | yes |
