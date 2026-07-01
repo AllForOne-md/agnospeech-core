@@ -94,18 +94,23 @@ python -m agnospeech.cli conformance
 
 The recommended **L2** configuration, applied to `reddit_25` and to `hatexplain` (the Twitter/Gab
 corpus), for both engines. Schema: `id,author,label,text`, where `text` is the L2-privatized post.
+Each file is the same **250-post-per-corpus sample** the configuration numbers above were computed
+on (deterministic, matched across engines), so the files correspond to the reported metrics.
+Regenerate at full corpus size with `python scripts/compute_results.py --cap 0`.
 
-| file | corpus | engine | author axis |
-| --- | --- | --- | --- |
-| `reddit_25_L2_fast.csv` | Reddit board corpus | fast | yes (25 pseudonymous authors) |
-| `reddit_25_L2_zeroshot.csv` | Reddit board corpus | zeroshot | yes |
-| `hatexplain_L2_fast.csv` | HateXplain (Twitter + Gab) | fast | no (utility only) |
-| `hatexplain_L2_zeroshot.csv` | HateXplain (Twitter + Gab) | zeroshot | no (utility only) |
+| file | corpus | engine | rows | author axis |
+| --- | --- | --- | --- | --- |
+| `reddit_25_L2_fast.csv` | Reddit board corpus | fast | 250 | yes (25 pseudonymous authors) |
+| `reddit_25_L2_zeroshot.csv` | Reddit board corpus | zeroshot | 250 | yes |
+| `hatexplain_L2_fast.csv` | HateXplain (Twitter + Gab) | fast | 250 | no (utility only) |
+| `hatexplain_L2_zeroshot.csv` | HateXplain (Twitter + Gab) | zeroshot | 250 | no (utility only) |
+| `hatexplain_twitter_L2_fast.csv` | HateXplain, Twitter only | fast | 121 | no (utility only) |
+| `hatexplain_twitter_L2_zeroshot.csv` | HateXplain, Twitter only | zeroshot | 121 | no (utility only) |
 
 `reddit_25` carries real (pseudonymous) author ids, so it supports an authorship-attribution privacy
 evaluation. HateXplain carries only hate labels (a single dummy author), so its files are for the
-utility (hate-detectability) side; a Twitter-only subset is obtainable by filtering ids ending
-`_twitter`.
+utility (hate-detectability) side; the `hatexplain_twitter_*` files are the pure-Twitter subset (Gab
+rows dropped).
 
 ## Metric and honesty bounds
 
