@@ -1,4 +1,4 @@
-"""Fetch the disjoint-from-cardiff hate corpora for the cross-dataset de-fixing test.
+"""Fetch the disjoint-from-cardiff hate corpora for the cross-dataset evaluation.
 
     python scripts/fetch_corpora.py            # all three
     python scripts/fetch_corpora.py --only hatecheck

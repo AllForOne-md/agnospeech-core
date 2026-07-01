@@ -1,4 +1,4 @@
-"""L3 Rewrite: rationale-anchored local style rewrite (lexicon-free).
+"""L3 Rewrite: rationale-anchored local style rewrite.
 
 Goal: destroy the authorship fingerprint (capitalization quirks, character
 elongation, punctuation habits, lexical choices, function-word patterns) while

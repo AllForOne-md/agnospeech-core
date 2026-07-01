@@ -1,14 +1,12 @@
-# AgnoSpeech (core)
+# AgnoSpeech
 
-A minimal, lexicon-free implementation of the AgnoSpeech privatization mechanism for
-privacy-preserving hate-speech detection (the PrivHSD task). Raw text goes in, privatized text
-comes out, such that a hate-speech detector still fires on the output while an authorship
-attacker's accuracy drops. There is **no hand-curated wordlist in any code path**: the mechanism is
-trained/grounded on data but does not rely on the exact data when run on a new dataset.
+The AgnoSpeech privatization mechanism for privacy-preserving hate-speech detection (the PrivHSD
+task). Raw text goes in, privatized text comes out, such that a hate-speech detector still fires on
+the output while an authorship attacker's accuracy drops. The mechanism is trained/grounded on data
+but does not rely on the exact data when run on a new dataset.
 
-This repository is the trimmed research build: the L1/L2/L3 mechanism, the two engines that run it,
-the reddit board corpus, and the best-configuration privatized data files. It omits the demo/web
-layer, the interactive harm-preservation check, notebooks, and experimental drop-ins.
+This repository contains the L1/L2/L3 mechanism, the two engines that run it, the reddit board
+corpus, and the best-configuration privatized data files.
 
 ## The mechanism
 
@@ -55,8 +53,8 @@ utility_ratio − privacy_ratio.
 
 L1 alone is not a viable privacy configuration (it barely moves the attacker). L3 is the
 readability-preserving fallback, not the privacy optimum. Across all six corpora both engines leave
-only **0–7%** of hate un-privatized at L2, versus **37–54%** for the earlier hand-lexicon baseline
-that this build replaced — the generalization result behind the "lexicon-free" claim.
+only **0–7%** of hate un-privatized at L2, so the mechanism generalizes across datasets rather than
+fitting a single one.
 
 ## Install
 

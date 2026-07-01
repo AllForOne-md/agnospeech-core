@@ -5,7 +5,7 @@ The privhsd board scores HS_accuracy - Author_accuracy on the server's HIDDEN
 labels, so no local TO can be computed here; this only APPLIES the privatizer and
 preserves the row IDs so the server can map back to its labels. The detector-grounded
 L2 / L3 are grounded on a labeled hate corpus (``--ground``, default reddit_25) and
-applied UNCHANGED to the target text - the de-fixing cross-dataset transfer setting,
+applied UNCHANGED to the target text - the cross-dataset transfer setting,
 so the kept harm spans follow the grounding detector's coverage (a Twitter-native
 detector would align better; reddit_25 is the fast, no-download default).
 

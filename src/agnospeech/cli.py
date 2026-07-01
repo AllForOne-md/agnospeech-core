@@ -2,9 +2,8 @@
 
     python -m agnospeech.cli conformance --check
 
-The demo scorecard generator was removed in the de-fixing pass. To compute
-privatization RESULTS (lexicon-free, both engines) for later comparison, use
-``python scripts/compute_results.py`` instead.
+To compute privatization results (both engines) for later comparison, use
+``python scripts/compute_results.py``.
 """
 
 from __future__ import annotations

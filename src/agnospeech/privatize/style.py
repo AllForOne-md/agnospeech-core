@@ -1,16 +1,14 @@
-"""De-fixed L3 stylistic resources: prebuilt NLTK stopwords + WordNet canonicalization.
+"""L3 stylistic resources: prebuilt NLTK stopwords + WordNet canonicalization.
 
-L3Rewrite's hand lists (``SYNONYMS``, ``_FUNCTION``) are stylistic, not the harm
-anchor, but they are still hand-written. This swaps them for prebuilt,
-corpus-independent resources:
+The L3 stylistic layer uses prebuilt, corpus-independent resources:
 
 - function words -> NLTK ``stopwords`` (English), a fixed published list.
 - lexical canonicalization -> WordNet dominant-synset lemma: replace a content
   word with the canonical lemma of its most common sense, erasing an author's
-  idiosyncratic word choice with no hand map.
+  idiosyncratic word choice.
 
-This de-fixes ONLY the stylistic layer; it does NOT touch the harm anchor, so it
-must pair with the detector-grounded (learned) anchor to be fully lexicon-free.
+This is ONLY the stylistic layer; it does NOT touch the harm anchor, which is the
+detector-grounded (learned) span extractor.
 
 Optional dep: ``pip install nltk`` plus the ``stopwords`` / ``wordnet`` / ``omw-1.4``
 corpora (``python -m nltk.downloader stopwords wordnet omw-1.4``). ``available()``

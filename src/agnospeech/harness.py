@@ -8,7 +8,7 @@ Protocol:
 - Authorship attacker in two strengths: static (trained on raw) and adaptive
   (trained on the privatized version it is tested on). Adaptive is the headline.
 - The L3 operating intensity is chosen by the curve's non-degenerate selector,
-  then used as the L3 level everywhere else, so the scorecard and the curve agree.
+  then used as the L3 level everywhere else, so the curve stays consistent.
 """
 
 from __future__ import annotations
@@ -121,7 +121,7 @@ def _build_anchor_cache(hsd, texts: list[str]) -> dict[str, set[str]]:
     detector anchor (which may need transformer occlusion) is computed a single
     time per text and reused across the whole intensity sweep + the ladder. Uses
     the SAME L2LearnedDistill spans, so L2 and L3 anchor on identical learned
-    rationale (the lexicon-free unification)."""
+    rationale."""
     l1 = L1Redact()
     l2 = L2LearnedDistill(hsd, method=_learned_method(hsd))
     cache: dict[str, set[str]] = {}
@@ -135,7 +135,7 @@ def _build_anchor_cache(hsd, texts: list[str]) -> dict[str, set[str]]:
 
 def _semantic_fn(kind: str):
     """Semantic-similarity proxy: 'tfidf' (char-ngram, default) or 'model2vec'
-    (frozen pretrained embedding, de-fixed)."""
+    (frozen pretrained embedding)."""
     if kind == "model2vec":
         from .metrics.embeddings import model2vec_semantic_similarity
         return model2vec_semantic_similarity
@@ -146,7 +146,7 @@ def _semantic_fn(kind: str):
 
 def _build_levels(hsd, op_intensity, seed, l1_kind: str = "regex",
                   anchor_cache: dict[str, set[str]] | None = None):
-    """The lexicon-free L0->L3 ladder: detector-grounded learned L2, L1 'regex' or
+    """The L0->L3 ladder: detector-grounded learned L2, L1 'regex' or
     'gliner', detector-anchored L3 with NLTK/WordNet style. ``anchor_cache`` supplies
     precomputed harm-anchor words so L3 does no per-call attribution."""
     return {
@@ -192,7 +192,7 @@ def _curve(train_raw, test_raw, train_authors, test_authors, test_labels, hsd,
 
 def _ab_row(name, lv, train_raw, test_raw, train_authors, test_authors,
             test_labels, hsd, static_atk, f1_raw, f1_maj, p_orig, seed) -> dict:
-    """One learned-vs-lexicon A/B row: utility, worst-case privacy, board, TO."""
+    """One L2 A/B row: utility, worst-case privacy, board, TO."""
     tr = lv.apply_many(train_raw)
     te = lv.apply_many(test_raw)
     pred = hsd.predict(te)
@@ -221,7 +221,7 @@ def _accuracy_strategies(levels, hsd, train_raw, test_raw, train_authors,
     """Accuracy-measuring reads beyond the headline TO (all CPU-cheap, linear).
 
     board form, dual-detector utility, ERASER faithfulness of the learned L2
-    rationale, a learned-vs-lexicon L2 A/B (the de-fixing proof), and a subgroup
+    rationale, an L2 A/B, and a subgroup
     F1 slice. Additive: does not touch the existing TO numbers.
     """
     y = np.asarray(test_labels)
@@ -242,7 +242,7 @@ def _accuracy_strategies(levels, hsd, train_raw, test_raw, train_authors,
     dual_util = dual_detector_utility(dual, test_labels, level_texts, f1_raw_dual,
                                       f1_maj)
 
-    # 3-4. ERASER faithfulness + learned-vs-lexicon A/B (the de-fixing proof).
+    # 3-4. ERASER faithfulness + L2 A/B.
     # These need linear attribution (the TF-IDF word channel); for a transformer
     # head, skip them with a note (use Captum IG for transformer-grounded rationale).
     if _supports_linear_attr(hsd):
@@ -259,7 +259,7 @@ def _accuracy_strategies(levels, hsd, train_raw, test_raw, train_authors,
                     "load-bearing Goodhart-resistant signal is dual utility, not "
                     "the dual sufficiency.",
         }
-        # Learned L2 row (no hand lexicon exists to compare against any more).
+        # Learned L2 row.
         ab = [
             _ab_row("L2_learned_linear", l2_learned, train_raw, test_raw,
                     train_authors, test_authors, test_labels, hsd, static_atk,
@@ -439,7 +439,7 @@ def run_eval(csv_path: str, seed: int = 0, bootstrap_b: int = 2000,
             **dom,
         },
         "accuracy": accuracy,
-        "_internal": {  # consumed by scorecard.py, stripped from the public JSON
+        "_internal": {  # internal fields, stripped from the public JSON
             "hsd": hsd,
             "static_atk": static_atk,
             "op_intensity": op_intensity,

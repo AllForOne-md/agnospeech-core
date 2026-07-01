@@ -10,7 +10,7 @@ A harm-relevant PRESERVE-LIST (protected-characteristic group nouns, a general
 policy list built independently of the eval corpus) keeps identity-group /
 nationality targets from being redacted, so HSD F1 is not depressed by removing
 the harm target. Reframed narrowly: this is FAIRER entity redaction (avoids
-name-shape bias), NOT the AAE harm-lexicon bias (that lives in L2 / harmcheck).
+name-shape bias), not the harm-signal bias in the L2 detector.
 
 Optional deps: presidio-analyzer (+ spaCy model) and gliner (+ its model). Both
 best-effort: GLiNER is added only if it loads; if presidio itself is absent,
