@@ -1,9 +1,8 @@
-"""Detector-grounded token saliency: the lexicon-free harm-span primitive.
+"""Detector-grounded token saliency: the harm-span primitive.
 
-The de-fixing core. Instead of a hand-built slur/target list (`HARM_LEXICON`,
-`TARGET_CUES`), the harm-bearing tokens are whatever the *trained* HSD head
-relies on. Two attribution methods, both behind one interface, no external data,
-no hand list, so the kept spans transfer wherever the detector transfers:
+The harm-bearing tokens are whatever the *trained* HSD head relies on. Two
+attribution methods, both behind one interface and no external data, so the kept
+spans transfer wherever the detector transfers:
 
 - ``linear``    : signed contribution of each word to the head's hate logit
                   (logreg coefficient x that word's tf-idf weight). One matrix
@@ -12,14 +11,9 @@ no hand list, so the kept spans transfer wherever the detector transfers:
                   *comprehensiveness* operation, per token). Faithful but slow
                   (~180s / 1154 posts); offline / board-facing use.
 
-Validated against the hand lexicon on reddit_25 (the corpus the lexicon was
-partly fit to): both learned variants match utility and beat the lexicon on
-worst-case privacy, internal TO, and the board proxy, with no hand list. This is
-IN-DOMAIN evidence on the lexicon's home corpus; cross-corpus transfer (where
-corpus-fitting becomes a liability) is untested. The kept spans follow the
-detector's own coverage, so they transfer only as far as the detector does. See
-the spike note `2026-06-17-lexicon-free-l2-ab-findings.md` and
-`wiki/research/lexicon-free-privatization.md`.
+On reddit_25 both attribution variants match utility and lead on worst-case
+privacy, internal TO, and the board proxy (in-domain). The kept spans follow the
+detector's own coverage, so they transfer only as far as the detector does.
 
 Honesty: this is a *faithfulness* signal, not a privacy guarantee, and it
 inherits the detector's bias (measure it with the faithfulness + subgroup
@@ -140,7 +134,7 @@ def keep_mask(sal: np.ndarray, keep_frac: float, window: int) -> list[bool]:
 
 def join_kept(tokens: list[str], keep: list[bool]) -> str:
     """Re-join kept tokens in original order, ellipsis-marking dropped gaps and
-    tidying spacing before punctuation (the shape the lexicon L2 also emits)."""
+    tidying spacing before punctuation."""
     out: list[str] = []
     gap = False
     for i, t in enumerate(tokens):

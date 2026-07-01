@@ -2,7 +2,7 @@
 
 Measures how much direct PII survives privatization: of the identifier spans
 found in the raw text, what fraction still appears verbatim in the output. Lower
-leakage is better. Reported alongside TO as a scorecard column and used by the
+leakage is better. Reported alongside TO as a companion column and used by the
 victim-side privacy readout (S11), never folded into the scored trade-off.
 """
 

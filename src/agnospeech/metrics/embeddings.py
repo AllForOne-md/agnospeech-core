@@ -1,4 +1,4 @@
-"""Frozen general-purpose semantic similarity (de-fixes the per-corpus TF-IDF refit).
+"""Frozen general-purpose semantic similarity (replaces the per-corpus TF-IDF refit).
 
 ``quality.mean_semantic_similarity`` refits a char-ngram TF-IDF vocabulary on the
 eval corpus EVERY call, which is itself a per-corpus-fit artifact. This swaps in a

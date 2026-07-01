@@ -1,7 +1,7 @@
 [project]
 name = "agnospeech"
 version = "0.1.0"
-description = "AgnoSpeech: a lexicon-free, tiered text-to-text privatization mechanism for privacy-preserving hate-speech detection."
+description = "AgnoSpeech: a tiered text-to-text privatization mechanism for privacy-preserving hate-speech detection."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }

@@ -1,11 +1,11 @@
-"""Compute privatization RESULTS for later comparison, with NO hand wordlist.
+"""Compute privatization RESULTS for later comparison.
 
-Two wordlist-free engines, side by side, on each dataset:
+Two engines, side by side, on each dataset:
   - fast     : TF-IDF head (refit per corpus) + learned L2 (linear) + L3 detector
                anchor + WordNet/NLTK style. No download, minutes. Adaptable per
                corpus, but the head is corpus-fit (dependency b remains).
   - zeroshot : cardiff transformer head + learned L2 (occlusion) + L3 detector
-               anchor + NLTK style. No wordlist AND no corpus-fit vocab. Slow on
+               anchor + NLTK style. No corpus-fit vocab. Slow on
                CPU (transformer occlusion), GPU-appropriate.
 
 For each (corpus, engine) writes results/<corpus>__<engine>.json (metrics) and

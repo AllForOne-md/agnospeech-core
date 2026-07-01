@@ -1,4 +1,4 @@
-"""L2 Distill: rationale-only harm-span extraction (lexicon-free).
+"""L2 Distill: rationale-only harm-span extraction.
 
 Keep the harm-bearing spans, drop the surrounding stylistic tissue. The detector
 still fires on the retained harm content (utility preserved), while a large part
@@ -8,7 +8,7 @@ away (privacy improves over L1).
 Invariant (hard-rule guard): L2 runs on already-L1-redacted text, so distillation
 can never resurrect an identifier the harm span carried.
 
-There is NO hand wordlist. ``L2LearnedDistill`` keeps the tokens the *trained* HSD
+``L2LearnedDistill`` keeps the tokens the *trained* HSD
 head relies on (detector-grounded saliency: linear for the TF-IDF head, occlusion
 for a transformer head). The harm signal is whatever the detector learned on this
 corpus (or, with a pretrained subword head, what it learned in general) — so the

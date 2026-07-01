@@ -33,7 +33,7 @@ class Floors:
     # Calibrated against the CPU-spine proxies: the feasible band keeps text
     # mostly real words and semantically close to the original; the degenerate
     # tail (unreadable "·"-heavy noise that still posts a high TO) falls below.
-    # Absolute magic constants; RelativeFloors below is the de-fixed alternative.
+    # Absolute magic constants; RelativeFloors below is the distribution-relative alternative.
     macro_f1: float = 0.55
     readability: float = 0.45
     semantic_sim: float = 0.40

@@ -7,8 +7,8 @@ from .l3_dp_rewrite import L3Rewrite
 def learned_levels(hsd, l3_intensity: float = 0.6, seed: int = 0,
                    l2_method: str = "linear", keep_frac: float = 0.6,
                    ) -> dict[str, Privatizer]:
-    """The lexicon-free L0->L3 dial: detector-grounded learned L2 + detector-anchored
-    L3 (NLTK/WordNet style). Needs the fitted ``HsdHead``; no hand wordlist anywhere."""
+    """The L0->L3 dial: detector-grounded learned L2 + detector-anchored
+    L3 (NLTK/WordNet style). Needs the fitted ``HsdHead``."""
     return {
         "L0": RawPassthrough(),
         "L1": L1Redact(),
