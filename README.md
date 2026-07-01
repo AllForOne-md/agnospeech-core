@@ -8,6 +8,9 @@ but does not rely on the exact data when run on a new dataset.
 This repository contains the L1/L2/L3 mechanism, the two engines that run it, the reddit board
 corpus, and the best-configuration privatized data files.
 
+An HTML overview of the mechanism, the results, and 100 sample privatizations per corpus (Reddit
+and Twitter) is in [`results.html`](results.html) — open it in a browser.
+
 ## The mechanism
 
 A four-position dial applied to each post:
@@ -124,6 +127,7 @@ src/agnospeech/     the package (privatize, detect, attacks, metrics, datasets, 
 scripts/            compute_results.py, fetch_corpora.py, fetch_hatexplain.py, privatize_submission.py
 data/               reddit_25.csv (the rest are fetched)
 privatized/         the best-config (L2) privatized data files
+results.html        browser overview: results + 100 sample privatizations per corpus
 ```
 
 ## License
