@@ -108,28 +108,23 @@ python -m agnospeech.cli conformance
 
 ## Privatized data files (`privatized/`)
 
-The recommended **L2** configuration, applied to `reddit_25` and to `hatexplain` (Twitter only), for
-both engines. Schema: `id,author,label,text`, where `text` is the L2-privatized post. The reddit
-files are the **full held-out test split** the configuration numbers above were computed on (n=346,
-all 25 authors), so they correspond to the reported metrics; the twitter files are a 500-post
-Twitter sample (generated on a Colab T4 GPU). Regenerate any size with `scripts/compute_results.py`.
+The privatized text for every corpus, engine, and level, named `<corpus>_L<level>_<engine>.csv`
+(schema `id,author,label,text`, where `text` is the privatized post at that level). **L0** is the raw
+text (the `data/*.csv` originals for the reddit corpora); **L1** = redact, **L2** = distill
+(recommended), **L3** = rewrite. Engines: `fast`, `zeroshot`. All three levels are provided for each
+corpus and engine.
 
-| file | corpus | engine | rows | author axis |
-| --- | --- | --- | --- | --- |
-| `reddit_25_L2_fast.csv` | Reddit board corpus (full test split) | fast | 346 | yes (25 pseudonymous authors) |
-| `reddit_25_L2_zeroshot.csv` | Reddit board corpus (full test split) | zeroshot | 346 | yes |
-| `reddit_50_L1_fast.csv` | Reddit, 50 authors (L1 redact) | fast | 539 | yes |
-| `reddit_50_L1_zeroshot.csv` | Reddit, 50 authors (L1 redact) | zeroshot | 539 | yes |
-| `reddit_50_L2_fast.csv` | Reddit, 50 authors (full test split) | fast | 539 | yes (50 pseudonymous authors) |
-| `reddit_50_L2_zeroshot.csv` | Reddit, 50 authors (full test split) | zeroshot | 539 | yes |
-| `reddit_50_L3_fast.csv` | Reddit, 50 authors (L3 rewrite) | fast | 539 | yes |
-| `reddit_50_L3_zeroshot.csv` | Reddit, 50 authors (L3 rewrite) | zeroshot | 539 | yes |
-| `hatexplain_twitter_L2_fast.csv` | HateXplain, Twitter only | fast | 500 | no (utility only) |
-| `hatexplain_twitter_L2_zeroshot.csv` | HateXplain, Twitter only | zeroshot | 500 | no (utility only) |
+| corpus | posts | author axis |
+| --- | --- | --- |
+| `reddit_25` | 346 (full test split) | yes — 25 pseudonymous authors |
+| `reddit_50` | 539 (full test split) | yes — 50 pseudonymous authors |
+| `hatexplain_twitter` | 500 (Twitter only) | no — utility only |
 
-`reddit_25` carries real (pseudonymous) author ids, so it supports an authorship-attribution privacy
-evaluation. The Twitter files carry only hate labels (a single dummy author), so they are for the
-utility (hate-detectability) side; Gab rows are dropped.
+Example: `reddit_50_L2_zeroshot.csv` is the L2 (distill) output of the zeroshot engine on the
+50-author Reddit corpus. The reddit corpora carry real (pseudonymous) author ids, so they support an
+authorship-attribution evaluation; the Twitter files carry hate labels only (Gab rows dropped). These
+are the full held-out test splits the configuration numbers above were computed on, generated on a
+Colab T4 GPU.
 
 ## Metric and honesty bounds
 
