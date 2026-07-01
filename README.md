@@ -32,26 +32,26 @@ Two **engines** run the same dial:
 
 The two axes are the **privacy level** (L1 / L2 / L3) and the **engine** (fast / zeroshot). Numbers
 below are on `reddit_25`, the only corpus with real author identities, so the only one with an
-authorship-attack and a trade-off (TO) number. Baseline L0: worst-case attack 0.456, utility 1.00,
-TO 0. Utility is HSD macro-F1 (majority-corrected) relative to raw; privacy is the worst-case
+authorship-attack and a trade-off (TO) number. Baseline L0: worst-case attack 0.462, utility 1.00,
+TO 0. All numbers are on the full held-out test split (n=346). Utility is HSD macro-F1 (majority-corrected) relative to raw; privacy is the worst-case
 authorship-attribution accuracy over a static and an adaptive attacker (lower is better); TO =
 utility_ratio − privacy_ratio.
 
 | Configuration | Engine | Utility ratio | Worst-case attack | TO | What it does |
 | --- | --- | --- | --- | --- | --- |
-| L1 (redact) | fast | 1.00 | 0.452 | 0.009 | identifier redaction only; almost no privacy gain |
-| **L2 (distill)** | **fast** | **0.935** | **0.228** | **0.435** | keep only harm-salient spans; best privacy and TO |
-| L3 (rewrite) | fast | 0.938 | 0.344 | 0.184 | reworded, readable; weaker privacy than L2 |
-| L1 (redact) | zeroshot | 0.929 | 0.380 | 0.096 | GLiNER NER redaction |
-| **L2 (distill)** | **zeroshot** | **1.00** | **0.264** | **0.421** | occlusion-distill; best privacy at zero utility cost |
-| L3 (rewrite) | zeroshot | 1.00 | 0.336 | 0.263 | reworded, readable |
+| L1 (redact) | fast | 1.00 | 0.462 | 0.000 | identifier redaction only; no privacy gain |
+| **L2 (distill)** | **fast** | **1.00** | **0.222** | **0.519** | keep only harm-salient spans; best privacy and TO, zero utility loss |
+| L3 (rewrite) | fast | 1.00 | 0.364 | 0.213 | reworded, readable; weaker privacy than L2 |
+| L1 (redact) | zeroshot | 0.859 | 0.399 | -0.003 | GLiNER NER redaction; costs utility, no privacy gain |
+| **L2 (distill)** | **zeroshot** | **1.00** | **0.269** | **0.419** | occlusion-distill; best privacy at zero utility cost |
+| L3 (rewrite) | zeroshot | 1.00 | 0.356 | 0.231 | reworded, readable |
 
 **Best configuration: L2 (distill), on either engine.**
 
-- **`fast` @ L2** gives the strongest privacy (worst-case attack 0.228, TO 0.435) for a ~6.5% utility
-  cost.
-- **`zeroshot` @ L2** gives near-equal privacy (0.264, TO 0.421) at **zero** utility loss, plus the
-  lowest cross-corpus hate leakage.
+- **`fast` @ L2** is the standout: it halves the worst-case attacker (0.462 → 0.222) at **zero**
+  utility loss (utility ratio 1.00), for the best trade-off (TO 0.519).
+- **`zeroshot` @ L2** gives near-equal privacy (attack 0.269, TO 0.419), also at zero utility loss,
+  plus the lowest cross-corpus hate leakage.
 
 L1 alone is not a viable privacy configuration (it barely moves the attacker). L3 is the
 readability-preserving fallback, not the privacy optimum. Across all six corpora both engines leave
@@ -92,25 +92,22 @@ python -m agnospeech.cli conformance
 
 ## Privatized data files (`privatized/`)
 
-The recommended **L2** configuration, applied to `reddit_25` and to `hatexplain` (the Twitter/Gab
-corpus), for both engines. Schema: `id,author,label,text`, where `text` is the L2-privatized post.
-Each file is the same **250-post-per-corpus sample** the configuration numbers above were computed
-on (deterministic, matched across engines), so the files correspond to the reported metrics.
-Regenerate at full corpus size with `python scripts/compute_results.py --cap 0`.
+The recommended **L2** configuration, applied to `reddit_25` and to `hatexplain` (Twitter only), for
+both engines. Schema: `id,author,label,text`, where `text` is the L2-privatized post. The reddit
+files are the **full held-out test split** the configuration numbers above were computed on (n=346,
+all 25 authors), so they correspond to the reported metrics; the twitter files are a 500-post
+Twitter sample (generated on a Colab T4 GPU). Regenerate any size with `scripts/compute_results.py`.
 
 | file | corpus | engine | rows | author axis |
 | --- | --- | --- | --- | --- |
-| `reddit_25_L2_fast.csv` | Reddit board corpus | fast | 250 | yes (25 pseudonymous authors) |
-| `reddit_25_L2_zeroshot.csv` | Reddit board corpus | zeroshot | 250 | yes |
-| `hatexplain_L2_fast.csv` | HateXplain (Twitter + Gab) | fast | 250 | no (utility only) |
-| `hatexplain_L2_zeroshot.csv` | HateXplain (Twitter + Gab) | zeroshot | 250 | no (utility only) |
-| `hatexplain_twitter_L2_fast.csv` | HateXplain, Twitter only | fast | 121 | no (utility only) |
-| `hatexplain_twitter_L2_zeroshot.csv` | HateXplain, Twitter only | zeroshot | 121 | no (utility only) |
+| `reddit_25_L2_fast.csv` | Reddit board corpus (full test split) | fast | 346 | yes (25 pseudonymous authors) |
+| `reddit_25_L2_zeroshot.csv` | Reddit board corpus (full test split) | zeroshot | 346 | yes |
+| `hatexplain_twitter_L2_fast.csv` | HateXplain, Twitter only | fast | 500 | no (utility only) |
+| `hatexplain_twitter_L2_zeroshot.csv` | HateXplain, Twitter only | zeroshot | 500 | no (utility only) |
 
 `reddit_25` carries real (pseudonymous) author ids, so it supports an authorship-attribution privacy
-evaluation. HateXplain carries only hate labels (a single dummy author), so its files are for the
-utility (hate-detectability) side; the `hatexplain_twitter_*` files are the pure-Twitter subset (Gab
-rows dropped).
+evaluation. The Twitter files carry only hate labels (a single dummy author), so they are for the
+utility (hate-detectability) side; Gab rows are dropped.
 
 ## Metric and honesty bounds
 
