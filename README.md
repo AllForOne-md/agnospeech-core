@@ -120,6 +120,8 @@ Twitter sample (generated on a Colab T4 GPU). Regenerate any size with `scripts/
 | `reddit_25_L2_zeroshot.csv` | Reddit board corpus (full test split) | zeroshot | 346 | yes |
 | `reddit_50_L2_fast.csv` | Reddit, 50 authors (full test split) | fast | 539 | yes (50 pseudonymous authors) |
 | `reddit_50_L2_zeroshot.csv` | Reddit, 50 authors (full test split) | zeroshot | 539 | yes |
+| `reddit_50_L3_fast.csv` | Reddit, 50 authors (L3 rewrite) | fast | 539 | yes |
+| `reddit_50_L3_zeroshot.csv` | Reddit, 50 authors (L3 rewrite) | zeroshot | 539 | yes |
 | `hatexplain_twitter_L2_fast.csv` | HateXplain, Twitter only | fast | 500 | no (utility only) |
 | `hatexplain_twitter_L2_zeroshot.csv` | HateXplain, Twitter only | zeroshot | 500 | no (utility only) |
 
