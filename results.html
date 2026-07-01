@@ -169,31 +169,19 @@
 
 <section>
   <h2>The privatized data files</h2>
-  <p>Under <code>privatized/</code>, at the best configuration (<b>L2</b>), for both engines. Schema is
-  <code>id,author,label,text</code>, where <code>text</code> is the L2-privatized post and
-  <code>label</code> is the gold hate label (1 = hate, 0 = not).</p>
+  <p>Under <code>privatized/</code>: the privatized text for every corpus, engine, and level, named
+  <code>&lt;corpus&gt;_L&lt;level&gt;_&lt;engine&gt;.csv</code> (schema <code>id,author,label,text</code>).
+  L0 is the raw text; <b>L1</b> = redact, <b>L2</b> = distill (recommended), <b>L3</b> = rewrite.
+  Engines: fast, zeroshot. All three levels are provided for each corpus and engine.</p>
   <table>
-    <tr><th>File</th><th>Corpus</th><th class="num">Rows</th><th>Author axis</th></tr>
-    <tr><td><code>reddit_25_L2_fast.csv</code></td><td>Reddit (full test split)</td><td class="num">346</td><td>yes — 25 pseudonymous authors</td></tr>
-    <tr><td><code>reddit_25_L2_zeroshot.csv</code></td><td>Reddit (full test split)</td><td class="num">346</td><td>yes</td></tr>
-    <tr><td><code>reddit_50_L1_fast.csv</code></td><td>Reddit, 50 authors (L1 redact)</td><td class="num">539</td><td>yes</td></tr>
-    <tr><td><code>reddit_50_L1_zeroshot.csv</code></td><td>Reddit, 50 authors (L1 redact)</td><td class="num">539</td><td>yes</td></tr>
-    <tr><td><code>reddit_50_L2_fast.csv</code></td><td>Reddit, 50 authors</td><td class="num">539</td><td>yes (50 pseudonymous authors)</td></tr>
-    <tr><td><code>reddit_50_L2_zeroshot.csv</code></td><td>Reddit, 50 authors</td><td class="num">539</td><td>yes</td></tr>
-    <tr><td><code>reddit_50_L3_fast.csv</code></td><td>Reddit, 50 authors (L3 rewrite)</td><td class="num">539</td><td>yes</td></tr>
-    <tr><td><code>reddit_50_L3_zeroshot.csv</code></td><td>Reddit, 50 authors (L3 rewrite)</td><td class="num">539</td><td>yes</td></tr>
-    <tr><td><code>hatexplain_twitter_L2_fast.csv</code></td><td>Twitter (HateXplain)</td><td class="num">500</td><td>no — utility only</td></tr>
-    <tr><td><code>hatexplain_twitter_L2_zeroshot.csv</code></td><td>Twitter (HateXplain)</td><td class="num">500</td><td>no — utility only</td></tr>
+    <tr><th>Corpus</th><th class="num">Posts</th><th>Author axis</th></tr>
+    <tr><td><code>reddit_25</code></td><td class="num">346</td><td>yes — 25 pseudonymous authors</td></tr>
+    <tr><td><code>reddit_50</code></td><td class="num">539</td><td>yes — 50 pseudonymous authors</td></tr>
+    <tr><td><code>hatexplain_twitter</code></td><td class="num">500</td><td>no — utility only (Gab dropped)</td></tr>
   </table>
-  <ul>
-    <li><b>Reddit</b> carries real (pseudonymous) author ids, so it supports a full authorship-attribution
-    evaluation (25-candidate closed world) as well as utility. The numbers above come from these files.</li>
-    <li><b>Twitter</b> (HateXplain, Gab rows dropped) is <b>utility-only</b>: it has hate labels but no
-    author labels, so it supports the detectability side, not an attribution attack. An author-labeled
-    Twitter corpus could be run through the same pipeline to produce an author-bearing file.</li>
-  </ul>
-  <p class="small">These are the recommended L2 configuration. The L1 and L3 variants, other corpora,
-  and larger samples are one flag away (<code>compute_results.py --cap N</code>).</p>
+  <p class="small">Example: <code>reddit_50_L2_zeroshot.csv</code> is the L2 (distill) output of the zeroshot
+  engine on the 50-author Reddit corpus. The reddit corpora carry real author ids (authorship evaluation);
+  the Twitter files carry hate labels only. Full held-out test splits, generated on a Colab T4.</p>
 </section>
 </div>
 <div id="red" class="tabpane" hidden>
