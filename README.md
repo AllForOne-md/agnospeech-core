@@ -114,17 +114,24 @@ text (the `data/*.csv` originals for the reddit corpora); **L1** = redact, **L2*
 (recommended), **L3** = rewrite. Engines: `fast`, `zeroshot`. All three levels are provided for each
 corpus and engine.
 
+**Row correspondence.** Each file is the **full corpus, one row per input post, in the same order as
+the input `data/*.csv`** — a 1:1 line-for-line correspondence with the input, and every row also
+carries its original `id` so it can be joined back regardless of order. (Earlier revisions shipped
+only the shuffled held-out test split, which broke that correspondence; this is fixed.) The raw
+inputs (L0) ship alongside for row-by-row diffing: `data/reddit_25.csv`, `data/reddit_50.csv`, and
+`data/hatexplain_twitter.csv`.
+
 | corpus | posts | author axis |
 | --- | --- | --- |
-| `reddit_25` | 346 (full test split) | yes — 25 pseudonymous authors |
-| `reddit_50` | 539 (full test split) | yes — 50 pseudonymous authors |
-| `hatexplain_twitter` | 500 (Twitter only) | no — utility only |
+| `reddit_25` | 1154 (full corpus, input order) | yes — 25 pseudonymous authors |
+| `reddit_50` | 1795 (full corpus, input order) | yes — 50 pseudonymous authors |
+| `hatexplain_twitter` | 9027 (Twitter only, full corpus) | no — utility only |
 
 Example: `reddit_50_L2_zeroshot.csv` is the L2 (distill) output of the zeroshot engine on the
 50-author Reddit corpus. The reddit corpora carry real (pseudonymous) author ids, so they support an
-authorship-attribution evaluation; the Twitter files carry hate labels only (Gab rows dropped). These
-are the full held-out test splits the configuration numbers above were computed on, generated on a
-Colab T4 GPU.
+authorship-attribution evaluation; the Twitter files carry hate labels only (Gab rows dropped). The
+configuration (TO) numbers above were computed on a held-out test partition of these same rows;
+the files themselves cover the complete corpus. The zeroshot files were generated on a Colab T4 GPU.
 
 ## Metric and honesty bounds
 
@@ -141,7 +148,7 @@ Colab T4 GPU.
 ```
 src/agnospeech/     the package (privatize, detect, attacks, metrics, datasets, harness, conformance)
 scripts/            compute_results.py, fetch_corpora.py, fetch_hatexplain.py, privatize_submission.py
-data/               reddit_25.csv (the rest are fetched)
+data/               reddit_25.csv, reddit_50.csv, hatexplain_twitter.csv (the L0 inputs; other corpora fetched)
 privatized/         the best-config (L2) privatized data files
 results.html        browser overview: results + 100 sample privatizations per corpus
 ```
