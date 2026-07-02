@@ -114,24 +114,29 @@ text (the `data/*.csv` originals for the reddit corpora); **L1** = redact, **L2*
 (recommended), **L3** = rewrite. Engines: `fast`, `zeroshot`. All three levels are provided for each
 corpus and engine.
 
-**Row correspondence.** Each file is the **full corpus, one row per input post, in the same order as
-the input `data/*.csv`** — a 1:1 line-for-line correspondence with the input, and every row also
-carries its original `id` so it can be joined back regardless of order. (Earlier revisions shipped
-only the shuffled held-out test split, which broke that correspondence; this is fixed.) The raw
-inputs (L0) ship alongside for row-by-row diffing: `data/reddit_25.csv`, `data/reddit_50.csv`, and
+**Row correspondence.** Each file is **one row per input post, in the same order as the input
+`data/*.csv`** — a 1:1 line-for-line correspondence with the input, and every row also carries its
+original `id` so it can be joined back regardless of order. (Earlier revisions shipped only the
+shuffled held-out test split, which broke that correspondence; this is fixed.) The raw inputs (L0)
+ship alongside for row-by-row diffing: `data/reddit_25.csv`, `data/reddit_50.csv`, and
 `data/hatexplain_twitter.csv`.
 
-| corpus | posts | author axis |
-| --- | --- | --- |
-| `reddit_25` | 1154 (full corpus, input order) | yes — 25 pseudonymous authors |
-| `reddit_50` | 1795 (full corpus, input order) | yes — 50 pseudonymous authors |
-| `hatexplain_twitter` | 9027 (Twitter only, full corpus) | no — utility only |
+| corpus | posts (fast) | posts (zeroshot) | author axis |
+| --- | --- | --- | --- |
+| `reddit_25` | 1154 (full) | 1154 (full) | yes — 25 pseudonymous authors |
+| `reddit_50` | 1795 (full) | 1795 (full) | yes — 50 pseudonymous authors |
+| `hatexplain_twitter` | 9027 (full) | 500 (first 500) | no — utility only |
+
+Both engines cover the full reddit corpora. For Twitter, the `fast` engine covers all 9027 posts;
+the `zeroshot` engine (GPU transformer occlusion) covers the **first 500 posts** in input order — a
+representative slice rather than the whole set, since the utility-only Twitter track needs no full
+sweep. All rows remain 1:1 with the corresponding input rows.
 
 Example: `reddit_50_L2_zeroshot.csv` is the L2 (distill) output of the zeroshot engine on the
 50-author Reddit corpus. The reddit corpora carry real (pseudonymous) author ids, so they support an
 authorship-attribution evaluation; the Twitter files carry hate labels only (Gab rows dropped). The
-configuration (TO) numbers above were computed on a held-out test partition of these same rows;
-the files themselves cover the complete corpus. The zeroshot files were generated on a Colab T4 GPU.
+configuration (TO) numbers above were computed on a held-out test partition of these rows. The
+zeroshot files were generated on a Colab T4 GPU.
 
 ## Metric and honesty bounds
 
