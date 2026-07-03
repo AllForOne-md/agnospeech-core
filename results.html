@@ -180,10 +180,12 @@
     <tr><th>Corpus</th><th class="num">Posts (fast)</th><th class="num">Posts (zeroshot)</th><th>Author axis</th></tr>
     <tr><td><code>reddit_25</code></td><td class="num">1154</td><td class="num">1154</td><td>yes — 25 pseudonymous authors</td></tr>
     <tr><td><code>reddit_50</code></td><td class="num">1795</td><td class="num">1795</td><td>yes — 50 pseudonymous authors</td></tr>
+    <tr><td><code>twitter_10</code></td><td class="num">6792</td><td class="num">6792</td><td>yes — 10 pseudonymous authors</td></tr>
     <tr><td><code>hatexplain_twitter</code></td><td class="num">9027</td><td class="num">500</td><td>no — utility only (Gab dropped)</td></tr>
   </table>
-  <p class="small">Both engines cover the full reddit corpora. For Twitter, <code>fast</code> covers all 9027 posts and
-  <code>zeroshot</code> (GPU occlusion) covers the first 500 in input order; all rows stay 1:1 with the input.
+  <p class="small"><code>twitter_10</code> is a 10-author Twitter corpus with real author ids, covered in full by both engines
+  (authorship evaluation). The utility-only <code>hatexplain_twitter</code> is full on <code>fast</code>; its
+  <code>zeroshot</code> output is the first 500 in input order. All rows stay 1:1 with the input.
   Example: <code>reddit_50_L2_zeroshot.csv</code> is the L2 (distill) output of the zeroshot engine on the
   50-author Reddit corpus. The reddit corpora carry real author ids (authorship evaluation);
   the Twitter files carry hate labels only. The TO numbers above were computed on a held-out test partition
