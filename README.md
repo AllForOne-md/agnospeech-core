@@ -118,19 +118,21 @@ corpus and engine.
 `data/*.csv`** — a 1:1 line-for-line correspondence with the input, and every row also carries its
 original `id` so it can be joined back regardless of order. (Earlier revisions shipped only the
 shuffled held-out test split, which broke that correspondence; this is fixed.) The raw inputs (L0)
-ship alongside for row-by-row diffing: `data/reddit_25.csv`, `data/reddit_50.csv`, and
-`data/hatexplain_twitter.csv`.
+ship alongside for row-by-row diffing: `data/reddit_25.csv`, `data/reddit_50.csv`,
+`data/hatexplain_twitter.csv`, and `data/twitter_10.csv`.
 
 | corpus | posts (fast) | posts (zeroshot) | author axis |
 | --- | --- | --- | --- |
 | `reddit_25` | 1154 (full) | 1154 (full) | yes — 25 pseudonymous authors |
 | `reddit_50` | 1795 (full) | 1795 (full) | yes — 50 pseudonymous authors |
+| `twitter_10` | 6792 (full) | 6792 (full) | yes — 10 pseudonymous authors |
 | `hatexplain_twitter` | 9027 (full) | 500 (first 500) | no — utility only |
 
-Both engines cover the full reddit corpora. For Twitter, the `fast` engine covers all 9027 posts;
-the `zeroshot` engine (GPU transformer occlusion) covers the **first 500 posts** in input order — a
-representative slice rather than the whole set, since the utility-only Twitter track needs no full
-sweep. All rows remain 1:1 with the corresponding input rows.
+`twitter_10` is a 10-author Twitter corpus that **does** carry author identities, so both engines
+cover it in full and it supports the authorship-attribution evaluation. The utility-only
+`hatexplain_twitter` corpus (no real authors) is covered in full by `fast`; its `zeroshot` output is
+the **first 500 posts** in input order — a representative slice, since a utility-only track needs no
+full occlusion sweep. All rows remain 1:1 with the corresponding input rows.
 
 Example: `reddit_50_L2_zeroshot.csv` is the L2 (distill) output of the zeroshot engine on the
 50-author Reddit corpus. The reddit corpora carry real (pseudonymous) author ids, so they support an
