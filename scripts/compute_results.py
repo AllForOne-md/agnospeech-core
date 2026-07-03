@@ -4,7 +4,7 @@ Two engines, side by side, on each dataset:
   - fast     : TF-IDF head (refit per corpus) + learned L2 (linear) + L3 detector
                anchor + WordNet/NLTK style. No download, minutes. Adaptable per
                corpus, but the head is corpus-fit (dependency b remains).
-  - zeroshot : cardiff transformer head + learned L2 (occlusion) + L3 detector
+  - performance : cardiff transformer head + learned L2 (occlusion) + L3 detector
                anchor + NLTK style. No corpus-fit vocab. Slow on
                CPU (transformer occlusion), GPU-appropriate.
 
@@ -14,7 +14,7 @@ macro-F1, utility_ratio, mean length, un-privatized fraction (hate left == L1),
 and -- when the corpus has real authors -- worst-case authorship attack + TO.
 
     python scripts/compute_results.py --engine fast              # all corpora, fast
-    python scripts/compute_results.py --engine zeroshot --cap 150
+    python scripts/compute_results.py --engine performance --cap 150
     python scripts/compute_results.py --engine both --corpora reddit_25
 """
 from __future__ import annotations
@@ -46,7 +46,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / "results"
 ENGINES = {
     "fast": dict(hsd="tfidf", l1="regex", l2_method="linear"),
-    "zeroshot": dict(hsd="cardiff", l1="gliner", l2_method="occlusion"),
+    "performance": dict(hsd="cardiff", l1="gliner", l2_method="occlusion"),
 }
 CORPORA = ["reddit_25", "hatecheck", "toxigen", "civilcomments", "hatexplain",
            "synth_joint"]
@@ -136,13 +136,13 @@ def run(corpus: str, engine: str, cap: int, seed: int) -> dict | None:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--engine", choices=["fast", "zeroshot", "both"], default="both")
+    ap.add_argument("--engine", choices=["fast", "performance", "both"], default="both")
     ap.add_argument("--corpora", nargs="+", default=CORPORA)
     ap.add_argument("--cap", type=int, default=250, help="cap test posts per corpus")
     ap.add_argument("--seed", type=int, default=GLOBAL_SEED)
     a = ap.parse_args()
     pin(a.seed)
-    engines = ["fast", "zeroshot"] if a.engine == "both" else [a.engine]
+    engines = ["fast", "performance"] if a.engine == "both" else [a.engine]
     summary = []
     for engine in engines:
         print(f"== engine: {engine} ==", flush=True)
