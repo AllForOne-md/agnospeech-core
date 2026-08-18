@@ -26,19 +26,18 @@ Two **engines** run the same dial:
 ## Install
 
 ```bash
-pip install -e .                 # fast engine (all-sklearn), plus nltk for L3
+pip install agnospeech                   # fast engine (all-sklearn), plus nltk for L3
 python -m nltk.downloader stopwords wordnet omw-1.4
 
-pip install -e ".[results]"      # add the zero-shot transformer engine
+pip install agnospeech[performance]      # adds the performance / transformer engine
 python -m spacy download en_core_web_sm
 ```
 
 ## Run
 
 ```bash
-python scripts/compute_results.py --engine fast              # all corpora, minutes, no downloads
-python scripts/compute_results.py --engine performance          # GPU-suited
-python scripts/compute_results.py --engine both --corpora reddit_25 hatexplain
+python scripts/compute_results.py --engine fast              # all corpora, no downloads
+python scripts/compute_results.py --engine performance       # GPU required
 ```
 
 Each run writes per-level metrics to `results/<corpus>__<engine>.json` and per-post L0→L3 text to

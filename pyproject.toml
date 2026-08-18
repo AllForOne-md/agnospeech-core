@@ -17,12 +17,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# The zero-shot transformer engine (`scripts/compute_results.py --engine zeroshot`):
+# The performance engine (`scripts/compute_results.py --engine performance`):
 # the cardiff HSD head + occlusion-based L2, the Presidio/GLiNER L1 NER path, and
 # `datasets` to fetch the disjoint corpora. GPU-aware (heads move to CUDA when
 # present). Each drop-in is optional-import guarded; the all-sklearn `fast` engine
 # needs none of this. After installing, also run: python -m spacy download en_core_web_sm
-results = [
+performance = [
   "transformers>=4.40",
   "torch>=2.2",
   "presidio-analyzer>=2.2",
