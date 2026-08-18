@@ -1,6 +1,6 @@
 # AgnoSpeech
 
-Anonymous submission repository for the WOAH 2026 submission: *Introducing the Privacy-HSD Trade-off: Hate Speech Detection, but not at the Cost of Privacy*
+Code repository for the WOAH 2026 paper: *Introducing the Privacy-HSD Trade-off: Hate Speech Detection, but not at the Cost of Privacy*
 
 This repository contains the `AgnoSpeech` privatization mechanism for privacy-preserving hate-speech detection.The mechanism is trained/grounded on a selected dataset but does not strictly rely on the exact data when run on a new dataset.
 
@@ -64,7 +64,3 @@ src/agnospeech/     the package (privatize, detect, attacks, metrics, datasets, 
 data/               reddit_25.csv, reddit_50.csv, hatexplain_twitter.csv (the L0 inputs; other corpora fetched)
 privatized/         the best-config (L2) privatized data files
 ```
-
-## License
-
-MIT. See `LICENSE`.
