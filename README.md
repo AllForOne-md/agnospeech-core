@@ -60,6 +60,6 @@ The privatized text for every corpus, engine, and level, named `<corpus>_L<level
 
 ```
 src/agnospeech/     the package (privatize, detect, attacks, metrics, datasets, harness, conformance)
-data/               reddit_25.csv, reddit_50.csv, hatexplain_twitter.csv (the L0 inputs; other corpora fetched)
+data/               reddit_25.csv, reddit_50.csv, twitter_10.csv (the L0 inputs)
 privatized/         the best-config (L2) privatized data files
 ```
